@@ -1,9 +1,9 @@
 import json
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any, Dict, Optional
 
-from rockit.core.component import Component
-from rockit.core.spec import Spec
+from rockit.component import Component
+from rockit.spec import Spec
 
 Json = Dict[str, Any]
 
@@ -33,7 +33,14 @@ class Site(Component):
     def get_service_def(self, spec: Spec, components: Dict[str, Component]) -> Json:
         source = Path(self.params.get("source", self.name)).absolute()
 
-        command = _find_command(source, "dev")
+        command: Optional[str] = None
+        for word in ["dev", "develop"]:
+            try:
+                command = _find_command(source, word)
+            except ValueError:
+                pass
+        if not command:
+            raise ValueError("Develop command not found in package.json.")
 
         return {
             self.name: {

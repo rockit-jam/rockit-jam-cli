@@ -29,3 +29,10 @@ class Spec(object):
             data = yaml.safe_load(fin)
 
         return Spec(data, file)
+
+    @staticmethod
+    def create_new(file: Path) -> "Spec":
+        with open(file) as fin:
+            data = yaml.safe_load(fin)
+
+        return Spec(data, file)

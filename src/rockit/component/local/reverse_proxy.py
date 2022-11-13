@@ -1,14 +1,14 @@
 from typing import Any, Dict
 
-from rockit.core.component import Component
-from rockit.core.spec import Spec
+from rockit.component import Component
+from rockit.spec import Spec
 
 Json = Dict[str, Any]
 
 
 _NGINX_CONF = """
 upstream {origin}_server {{
-    server {origin}_server:3000;
+    server {origin}_server:8000;
 }}
 
 server {{

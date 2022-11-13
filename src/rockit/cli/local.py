@@ -1,9 +1,9 @@
 from argparse import ArgumentError, ArgumentParser, Namespace
 from pathlib import Path
-from rockit.core.local.reverse_proxy import ReverseProxy
-from rockit.core.local.site import Site
+from rockit.component.local.reverse_proxy import ReverseProxy
+from rockit.component.local.site import Site
 
-from rockit.core.spec import Spec
+from rockit.spec import Spec
 
 from typing import Dict, Any
 import docker
@@ -138,11 +138,12 @@ def _make_compose_def(spec: Spec) -> Json:
 def _execute_local(args: Namespace) -> int:
     print("local")
 
-    spec_file = args.spec or Path("spec.yaml")
+    spec_file = args.spec or Path("rockit-spec.yaml")
     if not spec_file.exists():
         raise FileNotFoundError(f"Spec '{str(spec_file)}' not found.")
 
     spec = Spec.create_from_file(spec_file)
+    print(spec)
 
     compose_def = _make_compose_def(spec)
 
@@ -165,6 +166,6 @@ def _execute_local(args: Namespace) -> int:
 
 def setup_parser(parser: ArgumentParser) -> None:
     parser.add_argument(
-        "spec", type=Path, nargs="?", default=Path("spec.yaml"), help="input file"
+        "spec", type=Path, nargs="?", default=Path("rockit-spec.yaml"), help="input file"
     )
     parser.set_defaults(func=_execute_local)
