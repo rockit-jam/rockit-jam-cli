@@ -4,7 +4,7 @@ from rockit.spec import Spec
 
 
 def _execute(args: Namespace) -> int:
-    print("analyze command")
+    print("init command")
 
     spec = Spec.create_from_file(args.file)
 
@@ -14,5 +14,6 @@ def _execute(args: Namespace) -> int:
 
 
 def setup_parser(parser: ArgumentParser) -> None:
-    parser.add_argument(dest="file", type=Path, help="input file")
+    parser.add_argument("--name", type=str, help="Application Name")
+    parser.add_argument("--provider", type=str, help="Provider Name")
     parser.set_defaults(func=_execute)

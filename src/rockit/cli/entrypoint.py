@@ -8,6 +8,7 @@ import os
 
 from . import analyze
 from . import local
+from . import init
 
 
 def entrypoint(argv: List[str]) -> int:
@@ -21,6 +22,9 @@ def entrypoint(argv: List[str]) -> int:
     #                     help='sum the integers (default: find the max)')
 
     subparsers = parser.add_subparsers(help="sub-command help")
+
+    init_parser = subparsers.add_parser("init", help="init command")
+    init.setup_parser(init_parser)
 
     # create the parser for the "a" command
     analyze_parser = subparsers.add_parser("analyze", help="analyze command")

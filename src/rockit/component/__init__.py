@@ -1,6 +1,6 @@
 from typing import Dict, Any
 
-from rockit.core.spec import Spec
+from rockit.spec import Spec
 
 Json = Dict[str, Any]
 
